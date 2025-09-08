@@ -1,0 +1,203 @@
+/* 页面基础样式 */
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: #0f1220;
+  color: #e6e8ef;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial,
+    sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.hud {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 1280px; /* 与逻辑分辨率一致，后续用 transform 等比缩放 */
+  height: 720px;
+  padding: 16px 20px;
+  box-sizing: border-box;
+  pointer-events: none;
+  transform-origin: top left;
+}
+
+.title {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.instructions, .status {
+  margin-top: 6px;
+  color: #aeb4c0;
+}
+
+.stage {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  min-height: 100vh;
+}
+
+canvas#game {
+  background: #12162a;
+  border: 1px solid #2a3154;
+  image-rendering: pixelated;
+}
+
+.overlay {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  font-weight: 800;
+  color: #ffffff;
+  text-shadow: 0 2px 6px rgba(0,0,0,0.6);
+  pointer-events: none;
+  transform-origin: top left;
+}
+
+.hidden {
+  display: none;
+}
+
+/* 计时器：右上角 */
+.timer {
+  position: absolute;
+  top: 16px;
+  right: 20px;
+  font-size: 22px;
+  font-weight: 700;
+  color: #ffd166;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.4);
+  pointer-events: none;
+}
+
+/* 方向键容器：底部居中 */
+.controls {
+  position: absolute;
+  left: 0;
+  bottom: 16px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  pointer-events: auto; /* 允许按钮交互 */
+}
+
+.controls .row {
+  display: flex;
+  gap: 15px;
+}
+
+.controls .btn {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  border: none;
+  background: linear-gradient(135deg, #ff135a, #ff4081);
+  color: #ffffff;
+  font-size: 24px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(255, 19, 90, 0.4), 0 0 0.2em 0 rgba(255, 19, 90, 0.6);
+  position: relative;
+  overflow: hidden;
+}
+
+.controls .btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.2), rgba(255,255,255,0.1));
+  border-radius: 50%;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.controls .btn:hover {
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 8px 25px rgba(255, 19, 90, 0.6), 0 0 0.4em 0 rgba(255, 19, 90, 0.8);
+  animation: btn-glow 1s ease-in-out;
+}
+
+.controls .btn:hover::before {
+  opacity: 1;
+}
+
+.controls .btn:active {
+  transform: translateY(0px) scale(0.95);
+  transition: all 0.1s ease;
+}
+
+.controls .btn:focus {
+  outline: 0.1em solid transparent;
+  outline-offset: 0.2em;
+  box-shadow: 0 0 0.4em 0 rgba(255, 19, 90, 0.8);
+}
+
+/* 按钮发光动画 */
+@keyframes btn-glow {
+  0% {
+    outline: 0.2em solid rgba(255, 19, 90, 0.8);
+    outline-offset: 0;
+  }
+  100% {
+    outline: 0.2em solid transparent;
+    outline-offset: 0.2em;
+  }
+}
+
+/* 特殊样式：上方向键 */
+.controls .btn.up {
+  background: linear-gradient(135deg, #4caf50, #66bb6a);
+  box-shadow: 0 4px 15px rgba(76, 175, 80, 0.4), 0 0 0.2em 0 rgba(76, 175, 80, 0.6);
+}
+
+.controls .btn.up:hover {
+  box-shadow: 0 8px 25px rgba(76, 175, 80, 0.6), 0 0 0.4em 0 rgba(76, 175, 80, 0.8);
+}
+
+/* 特殊样式：下方向键 */
+.controls .btn.down {
+  background: linear-gradient(135deg, #ff9800, #ffb74d);
+  box-shadow: 0 4px 15px rgba(255, 152, 0, 0.4), 0 0 0.2em 0 rgba(255, 152, 0, 0.6);
+}
+
+.controls .btn.down:hover {
+  box-shadow: 0 8px 25px rgba(255, 152, 0, 0.6), 0 0 0.4em 0 rgba(255, 152, 0, 0.8);
+}
+
+/* 特殊样式：左方向键 */
+.controls .btn.left {
+  background: linear-gradient(135deg, #2196f3, #42a5f5);
+  box-shadow: 0 4px 15px rgba(33, 150, 243, 0.4), 0 0 0.2em 0 rgba(33, 150, 243, 0.6);
+}
+
+.controls .btn.left:hover {
+  box-shadow: 0 8px 25px rgba(33, 150, 243, 0.6), 0 0 0.4em 0 rgba(33, 150, 243, 0.8);
+}
+
+/* 特殊样式：右方向键 */
+.controls .btn.right {
+  background: linear-gradient(135deg, #9c27b0, #ba68c8);
+  box-shadow: 0 4px 15px rgba(156, 39, 176, 0.4), 0 0 0.2em 0 rgba(156, 39, 176, 0.6);
+}
+
+.controls .btn.right:hover {
+  box-shadow: 0 8px 25px rgba(156, 39, 176, 0.6), 0 0 0.4em 0 rgba(156, 39, 176, 0.8);
+}
+
